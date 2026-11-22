@@ -1,0 +1,690 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPORT NEWS — Новости спорта</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #BBC5AA;
+  --header: #111a30;
+  --card: #151f34;
+  --panel: #151f34;
+  --video: #202e48;
+  --text: #ffffff;
+  --muted: #aebbd0;
+  --accent: #42e8a5;
+  --border: #293750;
+  --input: #17233a;
+  --table-border: #34435f;
+  --footer: #111a30;
+  --modal: #17233a;
+}
+
+body.light {
+  --bg: #f1f4f8;
+  --header: #ffffff;
+  --card: #ffffff;
+  --panel: #ffffff;
+  --video: #e8edf5;
+  --text: #17233a;
+  --muted: #65738a;
+  --accent: #079b70;
+  --border: #d6deea;
+  --input: #ffffff;
+  --table-border: #d6deea;
+  --footer: #ffffff;
+  --modal: #ffffff;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Oswald", sans-serif;
+  transition: background .3s, color .3s;
+}
+
+header {
+  background: var(--header);
+  padding: 22px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: 900;
+  color: var(--accent);
+}
+
+.logo span {
+  color: var(--text);
+}
+
+nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 15px;
+  transition: .3s;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  transition: .3s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  transform: scale(1.04);
+}
+
+/* ГЛАВНЫЙ БАННЕР */
+
+.hero {
+  min-height: 430px;
+  padding: 80px 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background:
+    linear-gradient(rgba(10, 20, 35, .65), rgba(10, 20, 35, .78)),
+  url("https://images.unsplash.com/photo-1758506971986-b0d0edebd8d5?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D");
+
+  background-size: cover;
+  background-position: center;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 58px);
+  margin-bottom: 18px;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.hero h1 span {
+  color: var(--accent);
+}
+
+.hero p {
+  color: #ffffff;
+  font-size: 19px;
+  margin-top: 8px;
+}
+
+.hero .slogan {
+  font-size: clamp(25px, 4vw, 38px);
+  font-weight: bold;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.container {
+  padding: 35px 7%;
+}
+
+.section-title {
+  font-size: 25px;
+  margin-bottom: 22px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.filters button {
+  border: 1px solid var(--table-border);
+  background: var(--input);
+  color: var(--text);
+  padding: 10px 17px;
+  border-radius: 22px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.filters button.active,
+.filters button:hover {
+  background: var(--accent);
+  color: #071b17;
+}
+
+.search {
+  width: 100%;
+  max-width: 450px;
+  padding: 13px;
+  border-radius: 9px;
+  border: 1px solid var(--table-border);
+  background: var(--input);
+  color: var(--text);
+  margin-bottom: 25px;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.search::placeholder {
+  color: var(--muted);
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: .25s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+}
+
+.card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 18px;
+}
+
+.category {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card h3 {
+  margin: 12px 0;
+  font-size: 20px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.card button {
+  margin-top: 15px;
+  background: var(--accent);
+  color: #071b17;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 7px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.panel {
+  margin-top: 40px;
+  padding: 25px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+td, th {
+  padding: 13px;
+  text-align: left;
+  border-bottom: 1px solid var(--table-border);
+}
+
+th {
+  color: var(--accent);
+}
+
+.score {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.video {
+  padding: 25px;
+  border-radius: 12px;
+  background: var(--video);
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: var(--muted);
+  background: var(--footer);
+  margin-top: 40px;
+}
+
+#modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000c;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--modal);
+  color: var(--text);
+  padding: 25px;
+  border-radius: 15px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 22px;
+}
+
+@media(max-width: 600px) {
+  header {
+    padding: 20px 5%;
+  }
+
+  nav {
+    gap: 12px;
+  }
+
+  .container {
+    padding: 25px 5%;
+  }
+
+  .hero {
+    padding: 55px 5%;
+    min-height: 350px;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  td, th {
+    padding: 8px 5px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">SPORT <span>NEWS</span></div>
+
+  <nav>
+    <a href="#news">Новости</a>
+    <a href="#results">Результаты</a>
+    <a href="#transfers">Трансферы</a>
+    <a href="#statistics">Статистика</a>
+    <a href="#videos">Видео</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+    ☀️ Светлая тема
+  </button>
+</header>
+
+<!-- ГЛАВНЫЙ БАННЕР -->
+
+<section class="hero">
+  <h1>МИР <span>СПОРТА</span><br>В ОДНОМ МЕСТЕ</h1>
+
+  <p class="slogan">СПОРТ — ЭТО ЖИЗНЬ!</p>
+
+  <p>
+    Главные спортивные новости, результаты
+    и события каждый день!
+  </p>
+</section>
+
+<main class="container" id="news">
+
+  <h2 class="section-title">🔥 Последние новости</h2>
+
+  <input
+    class="search"
+    id="search"
+    placeholder="🔎 Поиск спортивных новостей..."
+    oninput="renderNews()"
+  >
+
+  <div class="filters" id="filters">
+    <button class="active" onclick="setFilter('Все',this)">Все</button>
+    <button onclick="setFilter('Футбол',this)">⚽ Футбол</button>
+    <button onclick="setFilter('Баскетбол',this)">🏀 Баскетбол</button>
+    <button onclick="setFilter('Теннис',this)">🎾 Теннис</button>
+    <button onclick="setFilter('Бокс',this)">🥊 Бокс</button>
+    <button onclick="setFilter('Другие',this)">🏎️ Другие</button>
+  </div>
+
+  <div class="news-grid" id="newsGrid"></div>
+
+  <!-- РЕЗУЛЬТАТЫ -->
+
+  <section class="panel" id="results">
+    <h2 class="section-title">🏆 Результаты матчей</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Команда 1</th>
+          <th>Счёт</th>
+          <th>Команда 2</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Реал Мадрид</td>
+          <td class="score">2 : 1</td>
+          <td>Барселона</td>
+        </tr>
+
+        <tr>
+          <td>Манчестер Сити</td>
+          <td class="score">3 : 0</td>
+          <td>Арсенал</td>
+        </tr>
+
+        <tr>
+          <td>Лейкерс</td>
+          <td class="score">108 : 102</td>
+          <td>Бостон</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="color:var(--muted);margin-top:12px;font-size:12px">
+      Демонстрационные результаты. Не являются данными матчей в реальном времени.
+    </p>
+  </section>
+
+  <!-- ТРАНСФЕРЫ -->
+
+  <section class="panel" id="transfers">
+    <h2 class="section-title">🔄 Трансферы</h2>
+
+    <p>• Здесь можно следить за переходами игроков.</p>
+    <p style="margin-top:12px">• Новости трансферного рынка.</p>
+    <p style="margin-top:12px">• Слухи и официальные объявления клубов.</p>
+  </section>
+
+  <!-- СТАТИСТИКА -->
+
+  <section class="panel" id="statistics">
+    <h2 class="section-title">📊 Спортивная статистика</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Игрок</th>
+          <th>Вид спорта</th>
+          <th>Показатель</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Игрок 1</td>
+          <td>Футбол</td>
+          <td>25 голов</td>
+        </tr>
+
+        <tr>
+          <td>Игрок 2</td>
+          <td>Баскетбол</td>
+          <td>30 очков</td>
+        </tr>
+
+        <tr>
+          <td>Игрок 3</td>
+          <td>Теннис</td>
+          <td>15 побед</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="color:var(--muted);margin-top:12px;font-size:12px">
+      Пример вымышленных статистических данных.
+    </p>
+  </section>
+
+  <!-- ВИДЕО -->
+
+  <section class="panel" id="videos">
+    <h2 class="section-title">🎥 Видео</h2>
+
+    <div class="video-grid">
+      <div class="video">⚽ Лучшие голы недели</div>
+      <div class="video">🏀 Баскетбольные моменты</div>
+      <div class="video">🥊 Обзоры боёв</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- МОДАЛЬНОЕ ОКНО -->
+
+<div id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">✕</span>
+    <h2 id="modalTitle" style="margin:20px 0"></h2>
+    <p id="modalText" style="color:var(--muted);line-height:1.7"></p>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">SPORT NEWS</div>
+  <p style="margin-top:12px">© 2026 SPORT NEWS. Все права защищены.</p>
+  <p style="margin-top:8px">Твой мир спорта начинается здесь!</p>
+  <p style="margin-top:8px;color:var(--accent)">СПОРТ — ЭТО ЖИЗНЬ!</p>
+</footer>
+
+<script>
+
+const news = [
+  {
+    category: "Футбол",
+    title: "Большие футбольные противостояния",
+    text: "Следи за главными событиями футбольного мира, клубами и национальными сборными.",
+    image: "https://images.unsplash.com/photo-1508098682722-e99c643e7f0b?w=700"
+  },
+  {
+    category: "Баскетбол",
+    title: "Самые яркие моменты баскетбола",
+    text: "Обзоры матчей, звёздные игроки и интересные события баскетбольных чемпионатов.",
+    image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=700"
+  },
+  {
+    category: "Теннис",
+    title: "Теннисные турниры мира",
+    text: "Следи за турнирами, победами и выступлениями известных теннисистов.",
+    image: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=700"
+  },
+  {
+    category: "Бокс",
+    title: "Мир профессионального бокса",
+    text: "Обзоры боёв, чемпионские поединки и новости боксерских организаций.",
+    image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=700"
+  },
+  {
+    category: "Другие",
+    title: "Автоспорт и скорость",
+    text: "Новости автогонок, соревнований и технологий автомобильного спорта.",
+    image: "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=700"
+  },
+  {
+    category: "Футбол",
+    title: "Футбольные звёзды и рекорды",
+    text: "Интересные истории, достижения спортсменов и самые обсуждаемые события.",
+    image: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=700"
+  }
+];
+
+let currentFilter = "Все";
+
+// ПЕРЕКЛЮЧЕНИЕ ТЕМЫ
+
+function applyTheme(theme) {
+  document.body.classList.toggle("light", theme === "light");
+
+  document.getElementById("themeToggle").textContent =
+    theme === "light" ? "🌙 Тёмная тема" : "☀️ Светлая тема";
+
+  localStorage.setItem("sportNewsTheme", theme);
+}
+
+function toggleTheme() {
+  const isLight = document.body.classList.contains("light");
+  applyTheme(isLight ? "dark" : "light");
+}
+
+// ЗАГРУЗКА СОХРАНЁННОЙ ТЕМЫ
+
+const savedTheme = localStorage.getItem("sportNewsTheme") || "dark";
+applyTheme(savedTheme);
+
+// ОТОБРАЖЕНИЕ НОВОСТЕЙ
+
+function renderNews() {
+  const query = document.getElementById("search").value.toLowerCase();
+
+  const filtered = news.filter(item =>
+    (currentFilter === "Все" || item.category === currentFilter) &&
+    (
+      item.title.toLowerCase().includes(query) ||
+      item.text.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query)
+    )
+  );
+
+  document.getElementById("newsGrid").innerHTML =
+    filtered.length ? filtered.map(item => `
+      <article class="card">
+
+        <img
+          src="${item.image}"
+          alt="${item.category}"
+          onerror="this.style.display='none'"
+        >
+
+        <div class="card-content">
+
+          <div class="category">${item.category}</div>
+
+          <h3>${item.title}</h3>
+
+          <p>${item.text}</p>
+
+          <button onclick="openNews(${news.indexOf(item)})">
+            Читать далее →
+          </button>
+
+        </div>
+      </article>
+    `).join("") : "<p>Новости не найдены.</p>";
+}
+
+// ФИЛЬТРЫ
+
+function setFilter(category, button) {
+  currentFilter = category;
+
+  document.querySelectorAll(".filters button").forEach(b =>
+    b.classList.remove("active")
+  );
+
+  button.classList.add("active");
+  renderNews();
+}
+
+// ОТКРЫТИЕ НОВОСТИ
+
+function openNews(index) {
+  const item = news[index];
+
+  document.getElementById("modalTitle").textContent = item.title;
+
+  document.getElementById("modalText").textContent =
+    item.text + " Это демонстрационная публикация спортивного портала.";
+
+  document.getElementById("modal").style.display = "flex";
+}
+
+// ЗАКРЫТИЕ НОВОСТИ
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+// ЗАПУСК
+
+renderNews();
+
+</script>
+
+</body>
+</html
